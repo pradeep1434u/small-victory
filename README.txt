@@ -1,8 +1,8 @@
-Small Victory PWA — 15-day personal test
+WIN TODAY — PWA V2
+No effort is wasted.
 
-For local testing, run a local web server from this folder:
+GitHub Pages: upload these files to the repository root and enable Settings > Pages > Deploy from main / root.
 
-Python: python -m http.server 8000
-Then open http://localhost:8000/
+V2 changes: polished mobile UI, bottom navigation, Tutorial tab, current-period editing when no entries exist, future-period scheduling after entries exist, delete-from-today behavior, future-date protection, colored results in Do, month-at-a-glance Journey, and comparison-first Home screen.
 
-Service workers and PWA installation require localhost or HTTPS; opening index.html directly as a file will not install the PWA.
+V3 terminology: Win, Big Win, Great Win, Outstanding Win. Existing V2 local data is migrated automatically.
