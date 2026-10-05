@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#30312e">
+<meta name="description" content="Small Victory — Start small. Win every day.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<title>Small Victory</title>
+<style>
+:root{--bg:#f7f4ef;--card:#fffdf9;--ink:#30312e;--muted:#77746c;--line:#e3ddd3;--soft:#eee9df;--accent:#697258;--victory:#3fd05a;--verygood:#6fa9dc;--excellent:#ffd62f;--outstanding:#a34dcc;--skip:#d7d3cc}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px system-ui,-apple-system,Segoe UI,sans-serif;-webkit-tap-highlight-color:transparent}.app{max-width:1050px;margin:auto;padding-bottom:60px}header{padding:25px 20px 12px;display:flex;justify-content:space-between;gap:16px;align-items:flex-start}.brand{font-size:25px;font-weight:850}.tag{font-size:12px;color:var(--muted)}
+nav{position:sticky;top:0;background:#f7f4eff2;backdrop-filter:blur(10px);display:flex;gap:6px;padding:10px 16px;border-bottom:1px solid var(--line);z-index:3;overflow:auto}nav button{border:0;background:none;padding:11px 13px;border-radius:11px;color:var(--muted);font-weight:750;white-space:nowrap}nav button.active{background:var(--ink);color:#fff}
+main{padding:22px}.panel{display:none}.panel.active{display:block}.hero{text-align:center;padding:35px 5px 20px}.hero h1{font-size:40px;line-height:1.08;letter-spacing:-1.4px;margin:8px auto 14px}.hero p{max-width:700px;margin:auto;color:var(--muted);font-size:17px;line-height:1.6}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.card,.habit,.do-card,.insight,.period-card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}.card p,.insight p,.period-card p{color:var(--muted);line-height:1.5}.head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}.head h2{margin:0;font-size:27px}.small{font-size:12px;color:var(--muted)}button.primary{border:0;background:var(--ink);color:#fff;border-radius:11px;padding:11px 15px;font-weight:750;cursor:pointer}button.secondary{border:0;background:var(--soft);color:var(--ink);border-radius:11px;padding:9px 12px;font-weight:700;cursor:pointer}button:disabled{opacity:.45;cursor:not-allowed}.list{display:grid;gap:12px}.habit{display:flex;justify-content:space-between;gap:14px}.meta{font-size:12px;color:var(--muted);line-height:1.55}.pill{display:inline-block;background:var(--soft);border-radius:999px;padding:4px 8px;margin:7px 4px 0 0;font-size:12px;font-weight:750}.empty{text-align:center;padding:40px;background:var(--card);border:1px dashed var(--line);border-radius:18px;color:var(--muted)}
+.date{display:flex;align-items:center;gap:10px;margin-bottom:18px;flex-wrap:wrap}input,select{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;background:white;font-size:15px;color:var(--ink)}label{display:block;font-size:12px;font-weight:750;margin:12px 0 6px}.do-card{margin-bottom:12px}.cue{text-transform:uppercase;font-size:11px;letter-spacing:.08em;color:var(--muted);font-weight:850;margin:18px 0 7px}.do-title{font-weight:850;font-size:18px}.result{margin-top:10px;background:var(--soft);border-radius:11px;padding:11px;font-weight:850}.threshold-note{margin-top:9px;color:var(--muted);font-size:12px}.reflection{margin-top:16px;background:#e9e4d8;border-radius:16px;padding:17px;line-height:1.55}.reflection b{display:block;margin-bottom:5px}.period-banner{margin:0 0 16px;padding:13px 15px;background:var(--soft);border-radius:14px;font-size:13px;color:var(--muted)}
+.wrap{overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:17px}table{border-collapse:collapse;width:100%;min-width:760px}th,td{padding:11px;border-bottom:1px solid var(--line);text-align:left;font-size:12px;vertical-align:top}th{background:#efebe3;text-transform:uppercase;letter-spacing:.04em;font-size:11px}tr:last-child td{border:0}.level-cell{font-weight:850;text-align:center;border-radius:9px;padding:7px 8px;display:inline-block;min-width:78px}.lv-victory{background:var(--victory);color:#123719}.lv-verygood{background:var(--verygood);color:#102d49}.lv-excellent{background:var(--excellent);color:#4d3d00}.lv-outstanding{background:var(--outstanding);color:#fff}.lv-skip{background:var(--skip);color:#5f5b55}.journey-legend{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 14px}.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);font-weight:750}.legend-dot{width:12px;height:12px;border-radius:4px}.period-note{margin-top:12px;color:var(--muted);font-size:12px}.insights{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-top:14px}.insight h4{margin:0 0 8px}
+.modal{display:none;position:fixed;inset:0;background:#0006;align-items:center;justify-content:center;padding:18px;z-index:10}.modal.show{display:flex}.box{width:min(720px,100%);max-height:92vh;overflow:auto;background:var(--card);border-radius:20px;padding:22px}.close{float:right;border:0;background:none;font-size:25px;color:var(--muted)}.activity{border:1px solid var(--line);border-radius:14px;padding:13px;margin-top:12px}.row{display:grid;grid-template-columns:1fr 1fr;gap:9px}.notice{padding:12px 14px;background:#f0ece4;border-radius:12px;color:var(--muted);font-size:13px;line-height:1.45;margin:12px 0}.install{display:none}.install.show{display:inline-block}
+@media(max-width:700px){.grid{grid-template-columns:1fr}.hero h1{font-size:33px}.habit{flex-direction:column}.row{grid-template-columns:1fr}nav{padding-left:10px;padding-right:10px}main{padding:15px}header{padding-left:15px;padding-right:15px}.head{align-items:flex-start}.head h2{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div><div class="brand">Small Victory</div><div class="tag">Start small. Win every day.</div></div><button id="installBtn" class="secondary install">Install app</button></header>
+<nav id="nav"><button class="active" data-tab="start">START SMALL</button><button data-tab="build">BUILD</button><button data-tab="do">DO</button><button data-tab="journey">JOURNEY</button></nav>
+<main>
+<section id="start" class="panel active">
+<div class="hero"><div class="small">Your 15-day personal test</div><h1>Small is not a compromise.<br>Small is the foundation.</h1><p>Protect a minimum you can actually live with. Go further when you have the capacity. Never turn yesterday's extra effort into tomorrow's obligation.</p></div>
+<div class="grid"><div class="card"><h3>Victory is enough</h3><p>Your minimum is a success, not a low score. A difficult day can still contain a win.</p></div><div class="card"><h3>More is optional</h3><p>Very Good, Excellent and Outstanding describe extra effort. They do not redefine what you need to do tomorrow.</p></div><div class="card"><h3>Look for patterns</h3><p>Journey helps you notice what actually happened across each 15-day period—without scores or streaks.</p></div></div>
+<div class="period-card" style="margin-top:14px"><h3>Your current 15-day period</h3><p id="startPeriod"></p><p class="small">Changes to habit thresholds are scheduled for the next period, so your history stays stable.</p></div>
+</section>
+
+<section id="build" class="panel">
+<div class="head"><div><h2>Build your habits</h2><span class="small">Up to 3 habits in this personal test.</span></div><button class="primary" onclick="openModal()">+ Add habit</button></div>
+<div id="habitList"></div>
+</section>
+
+<section id="do" class="panel">
+<div class="head"><div><h2>Do</h2><span class="small">Choose one way per habit.</span></div></div>
+<div class="date"><b>Date</b><input id="date" type="date" onchange="renderAll()" style="max-width:180px"><span id="doPeriod" class="small"></span></div>
+<div id="doList"></div><div id="daily"></div>
+</section>
+
+<section id="journey" class="panel">
+<div class="head"><div><h2>Journey</h2><span class="small">A 15-day view of your effort.</span></div><select id="journeyPeriod" style="max-width:220px" onchange="renderJourney()"></select></div>
+<div id="journeyTable"></div><div id="insights" class="insights"></div>
+</section>
+</main></div>
+
+<div id="modal" class="modal"><div class="box"><button class="close" onclick="closeModal()">×</button><h2 id="modalTitle">Add habit</h2><div id="editNotice" class="notice" style="display:none"></div>
+<label>Habit name</label><input id="hname" placeholder="e.g. Fitness">
+<label>Cue</label><select id="cue"><option>Morning</option><option>Afternoon</option><option>Evening</option><option>No cue</option></select>
+<div id="acts"></div><button class="secondary" id="addway" onclick="addWay()">+ Add another way</button>
+<div style="margin-top:20px;text-align:right"><button class="secondary" onclick="closeModal()">Cancel</button> <button class="primary" onclick="saveHabit()">Save habit</button></div>
+</div></div>
+
+<script>
+const KEY="smallVictoryPWA1";
+const LEVELS=["Victory","Very Good","Excellent","Outstanding"];
+let S=JSON.parse(localStorage.getItem(KEY)||"null");
+const $=id=>document.getElementById(id);
+const uid=()=>crypto.randomUUID?crypto.randomUUID():Math.random().toString(36).slice(2)+Date.now();
+const iso=d=>{const x=new Date(d);return new Date(x.getTime()-x.getTimezoneOffset()*60000).toISOString().slice(0,10)};
+const today=()=>iso(new Date());
+function save(){localStorage.setItem(KEY,JSON.stringify(S))}
+function esc(x){return String(x??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function parseDate(s){return new Date(s+"T12:00:00")}
+function addDays(s,n){const d=parseDate(s);d.setDate(d.getDate()+n);return iso(d)}
+function fmt(s){return s.slice(5)}
+function periodFromDate(s){
+  const d=parseDate(s); const start= S.testStart || today();
+  const diff=Math.floor((parseDate(s)-parseDate(start))/86400000);
+  const idx=diff<0?Math.floor(diff/15):Math.floor(diff/15);
+  const ps=addDays(start,idx*15); const pe=addDays(ps,14);
+  return {id:ps,start:ps,end:pe,index:idx};
+}
+function periodsTouched(){
+  const set=new Set([periodFromDate(today()).id]);
+  Object.keys(S.records||{}).forEach(d=>set.add(periodFromDate(d).id));
+  return [...set].sort();
+}
+function metricList(){return ["Minutes","Hours","Steps","Pages","Repetitions","Calls","Kilometres","Miles","Yes / No","Custom"]}
+function metricUnit(a){return a.metric==="Custom"?(a.unit||"custom metric"):a.metric}
+function configKeys(h){return Object.keys(h.configs||{}).sort()}
+function configFor(h,pid){
+  const keys=configKeys(h);let best=null;for(const k of keys){if(k<=pid)best=k;else break}
+  return best?h.configs[best]:null;
+}
+function currentConfig(h,date=today()){return configFor(h,periodFromDate(date).id)}
+function nextPeriodId(date=today()){return periodFromDate(addDays(date,15)).id}
+function updateMetricUI(sel){const box=sel.closest('.activity');const custom=box.querySelector('.customMetric');custom.style.display=sel.value==='Custom'?'block':'none';if(sel.value!=='Custom')box.querySelector('.unit').value=''}
+let editingId=null;
+function openModal(id=null){
+ editingId=id;$('modal').classList.add('show');$('acts').innerHTML='';
+ if(id){const h=S.habits.find(x=>x.id===id),c=currentConfig(h);$('modalTitle').textContent='Edit habit';$('hname').value=c.name;$('cue').value=c.cue;$('editNotice').style.display='block';$('editNotice').textContent=`Your changes will start on ${periodFromDate(nextPeriodId()).start}. Your current 15-day period will not be changed.`;c.activities.forEach(a=>addWay(a));}
+ else{$('modalTitle').textContent='Add habit';$('hname').value='';$('cue').value='Morning';$('editNotice').style.display='none';addWay()}
+ renumber();
+}
+function closeModal(){$('modal').classList.remove('show');editingId=null}
+function addWay(existing=null){
+ if($('acts').children.length>=3)return;
+ const n=$('acts').children.length+1,d=document.createElement('div');d.className='activity';d.dataset.aid=existing?.id||uid();
+ const opts=metricList().map(x=>`<option ${existing?.metric===x?'selected':''}>${x}</option>`).join('');
+ d.innerHTML=`<b>Way ${n}</b>${n>1?` <button class="secondary" onclick="this.parentElement.remove();renumber()">Remove</button>`:''}
+ <label>Activity name</label><input class="aname" value="${esc(existing?.name||'')}" placeholder="e.g. Walking">
+ <label>Metric</label><select class="metric" onchange="updateMetricUI(this)">${opts}</select><div class="customMetric" style="display:${existing?.metric==='Custom'?'block':'none'}"><label>Custom metric</label><input class="unit" value="${esc(existing?.unit||'')}" placeholder="e.g. tasks, words, glasses, chapters"></div>
+ <div class="row"><div><label>Victory</label><input class="v" type="number" min="0" step="any" value="${existing?.thresholds?.v??''}"></div><div><label>Very Good</label><input class="vg" type="number" min="0" step="any" value="${existing?.thresholds?.vg??''}"></div><div><label>Excellent</label><input class="ex" type="number" min="0" step="any" value="${existing?.thresholds?.ex??''}"></div><div><label>Outstanding (optional)</label><input class="out" type="number" min="0" step="any" value="${existing?.thresholds?.out??''}"></div></div>`;
+ $('acts').appendChild(d);$('addway').disabled=$('acts').children.length>=3;
+}
+function renumber(){[...$('acts').children].forEach((x,i)=>x.querySelector('b').textContent='Way '+(i+1));$('addway').disabled=$('acts').children.length>=3}
+function readActivities(){
+ const activities=[];for(const x of $('acts').children){
+  const metric=x.querySelector('.metric').value,name=x.querySelector('.aname').value.trim();if(!name)throw Error('Every way needs a name.');
+  const unit=metric==='Custom'?x.querySelector('.unit').value.trim():'';if(metric==='Custom'&&!unit)throw Error('Enter the custom metric name.');
+  if(metric==='Yes / No')activities.push({id:x.dataset.aid,name,metric,unit:'',thresholds:{v:1,vg:1,ex:1,out:null}});
+  else{const v=+x.querySelector('.v').value,vg=+x.querySelector('.vg').value,ex=+x.querySelector('.ex').value,out=x.querySelector('.out').value===''?null:+x.querySelector('.out').value;if(!(v>0&&v<vg&&vg<ex))throw Error('Victory, Very Good and Excellent must increase and be greater than 0.');if(out!==null&&out<=ex)throw Error('Outstanding must be greater than Excellent.');activities.push({id:x.dataset.aid,name,metric,unit,thresholds:{v,vg,ex,out}})}
+ }
+ return activities;
+}
+function saveHabit(){
+ try{
+  const name=$('hname').value.trim();if(!name)throw Error('Enter a habit name.');
+  const activities=readActivities(); const cue=$('cue').value;
+  if(!editingId && S.habits.length>=3)throw Error('This personal test is limited to 3 habits.');
+  if(editingId){const h=S.habits.find(x=>x.id===editingId);const pid=nextPeriodId($('date').value||today());h.configs[pid]={name,cue,activities};}
+  else{const h={id:uid(),createdAt:today(),configs:{[periodFromDate(today()).id]:{name,cue,activities}}};S.habits.push(h)}
+  save();closeModal();renderAll();
+ }catch(e){alert(e.message)}
+}
+function deleteHabit(id){if(!confirm('Remove this habit from future periods? Existing history will stay on this device.'))return;const h=S.habits.find(x=>x.id===id);if(!h)return;h.deletedFrom=nextPeriodId();save();renderAll()}
+function activeHabits(date=today()){const pid=periodFromDate(date).id;return S.habits.filter(h=>h.createdAt<=date && !h.deletedFrom||(!h.deletedFrom||h.deletedFrom>pid)).filter(h=>configFor(h,pid))}
+function displayHabits(date=today()){return S.habits.filter(h=>h.createdAt<=date && (!h.deletedFrom||periodFromDate(date).id<h.deletedFrom) && configFor(h,periodFromDate(date).id))}
+function renderBuild(){
+ const hs=S.habits.filter(h=>!h.deletedFrom||h.deletedFrom>periodFromDate(today()).id);
+ if(!hs.length){$('habitList').innerHTML=`<div class="empty">No habits yet. Start with one habit that feels easy to protect.</div>`;return}
+ $('habitList').innerHTML=`<div class="list">${hs.map(h=>{const c=currentConfig(h);return `<div class="habit"><div><h3 style="margin:0 0 4px">${esc(c.name)}</h3><div class="meta">Cue: ${esc(c.cue)} · ${c.activities.length} way${c.activities.length===1?'':'s'}</div><div>${c.activities.map(a=>`<span class="pill">${esc(a.name)} · ${esc(metricUnit(a))}</span>`).join('')}</div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="secondary" onclick="openModal('${h.id}')">Edit</button><button class="secondary" onclick="deleteHabit('${h.id}')">Remove</button></div></div>`}).join('')}</div>`;
+}
+function achievement(a,val){
+ if(a.metric==='Yes / No')return val==='yes'?'Victory':'Skip';
+ const n=+val;if(!Number.isFinite(n)||n<=0)return 'Skip';const t=a.thresholds;if(t.out!==null&&n>=t.out)return 'Outstanding';if(n>=t.ex)return 'Excellent';if(n>=t.vg)return 'Very Good';if(n>=t.v)return 'Victory';return 'Skip';
+}
+function rec(date,h){return S.records?.[date]?.[h.id]}
+function ensureRecord(date,h,aid,value){if(!S.records[date])S.records[date]={};S.records[date][h.id]={aid,value,level:achievement(currentConfig(h,date).activities.find(a=>a.id===aid),value)};save()}
+function renderDo(){
+ const date=$('date').value||today();$('date').value=date;const p=periodFromDate(date);$('doPeriod').textContent=`15-day period: ${p.start} → ${p.end}`;const hs=displayHabits(date);
+ if(!hs.length){$('doList').innerHTML=`<div class="empty">Build a habit first, then come back here to record your day.</div>`;$('daily').innerHTML='';return}
+ const cues={Morning:1,Afternoon:2,Evening:3,'No cue':4};hs.sort((a,b)=>(cues[currentConfig(a,date).cue]||9)-(cues[currentConfig(b,date).cue]||9));
+ $('doList').innerHTML=hs.map(h=>{const c=currentConfig(h,date),r=rec(date,h),aid=r?.aid||c.activities[0].id,a=c.activities.find(x=>x.id===aid)||c.activities[0];let input='';if(a.metric==='Yes / No')input=`<select onchange="record(this,'${h.id}','${a.id}')"><option value="">Not entered</option><option value="yes" ${r?.value==='yes'?'selected':''}>Yes</option><option value="no" ${r?.value==='no'?'selected':''}>No</option></select>`;else input=`<input type="number" min="0" step="any" value="${r?.value??''}" placeholder="Enter ${esc(metricUnit(a).toLowerCase())}" onchange="record(this,'${h.id}','${a.id}')">`;
+ return `<div class="do-card"><div class="cue">${esc(c.cue)}</div><div class="do-title">${esc(c.name)}</div><label>Choose one way</label><select onchange="chooseWay(this,'${h.id}')">${c.activities.map(x=>`<option value="${x.id}" ${x.id===a.id?'selected':''}>${esc(x.name)} · ${esc(metricUnit(x))}</option>`).join('')}</select><label>Your result</label>${input}<div class="threshold-note">Victory ${a.metric==='Yes / No'?'· Yes = Victory':a.thresholds.v+' '+metricUnit(a)} · Very Good ${a.metric==='Yes / No'?'· —':a.thresholds.vg+' '+metricUnit(a)} · Excellent ${a.metric==='Yes / No'?'· —':a.thresholds.ex+' '+metricUnit(a)}${a.thresholds.out!==null&&a.metric!=='Yes / No'?' · Outstanding '+a.thresholds.out+' '+metricUnit(a):''}</div><div class="result">${r?esc(r.level):'Waiting for today’s result'}</div></div>`}).join('');
+ $('daily').innerHTML=`<div class="reflection"><b>Today's reflection</b>${esc(dailyMessage(date))}</div>`;
+}
+function chooseWay(sel,hid){const date=$('date').value,h=S.habits.find(x=>x.id===hid);if(!S.records[date])S.records[date]={};S.records[date][hid]={aid:sel.value,value:'',level:'Skip'};save();renderAll()}
+function record(el,hid,aid){const date=$('date').value,h=S.habits.find(x=>x.id===hid),a=currentConfig(h,date).activities.find(x=>x.id===aid);ensureRecord(date,h,aid,el.value);renderAll()}
+function pluralNames(items){const names=items.map(x=>x.c.name||x.h?.name||x.name);if(names.length<=1)return names[0]||'';if(names.length===2)return names.join(' and ');return names.slice(0,-1).join(', ')+', and '+names.at(-1)}
+function levelRank(l){return {Skip:0,Victory:1,'Very Good':2,Excellent:3,Outstanding:4}[l]||0}
+function dailyMessage(date){
+ const hs=displayHabits(date),vals=hs.map(h=>({h,c:currentConfig(h,date),r:rec(date,h)})),done=vals.filter(x=>x.r&&x.r.level!=='Skip'),skip=vals.filter(x=>!x.r||x.r.level==='Skip');if(!vals.length)return 'Build a habit first, then protect a small Victory.';
+ if(!done.length)return "Today didn't go as planned. That's okay. Tomorrow, don't aim for everything—just protect the Victory level and get the rhythm going again.";
+ if(!skip.length){if(done.every(x=>x.r.level==='Victory'))return `You showed up across all ${done.length} today. Victory was enough, and you protected it across the board.`;const high=done.filter(x=>levelRank(x.r.level)>1);const max=Math.max(...high.map(x=>levelRank(x.r.level)));const strongest=high.filter(x=>levelRank(x.r.level)===max);if(done.every(x=>levelRank(x.r.level)>1))return `You went beyond your minimum across all ${done.length} today, with ${pluralNames(strongest)} reaching ${strongest[0].r.level}. Enjoy the extra effort—Victory is still enough tomorrow.`;const v=done.filter(x=>x.r.level==='Victory'),parts=[];if(v.length)parts.push(`You showed up across all ${done.length} today.`);if(high.length)parts.push(`You went beyond Victory in ${pluralNames(high)}${strongest.length?`, with ${pluralNames(strongest)} reaching ${strongest[0].r.level}`:''}.`);return parts.join(' ')+` Extra effort is optional; Victory remains enough tomorrow.`}
+ if(done.length===1){const x=done[0];return x.r.level==='Victory'?`You kept ${x.c.name} going today while ${skip.length===1?skip[0].c.name+' was':'the other habits were'} missed. That's still a meaningful win. When you're ready, return to the others with an easy Victory.`:`You kept ${x.c.name} going ${x.r.level==='Outstanding'?'well beyond':'beyond'} your minimum today while ${skip.length===1?skip[0].c.name+' was':'the other habits were'} missed. One habit falling away doesn't erase what you did in the others.`}
+ const high=done.filter(x=>x.r.level!=='Victory');let m=high.length?`You kept ${pluralNames(done)} going today, with ${pluralNames(high)} going beyond Victory.`:`You kept ${pluralNames(done)} at Victory today.`;const strongest=done.filter(x=>levelRank(x.r.level)===Math.max(...done.map(x=>levelRank(x.r.level))));if(levelRank(strongest[0].r.level)>=3)m+=` ${pluralNames(strongest)} reached ${strongest[0].r.level}.`;m+=` ${pluralNames(skip)} ${skip.length===1?'was':'were'} missed. A busy day happens sometimes; returning to Victory is what matters.`;return m;
+}
+function analyzePeriod(h,p){
+ const c={Skip:0,Victory:0,'Very Good':0,Excellent:0,Outstanding:0},seq=[];for(let d=parseDate(p.start);d<=parseDate(p.end);d.setDate(d.getDate()+1)){const ds=iso(d),r=rec(ds,h),l=r?.level||'Skip';c[l]++;seq.push(l)}
+ const completed=LEVELS.reduce((n,l)=>n+c[l],0),sk=c.Skip,active=LEVELS.filter(l=>c[l]>0),ranked=[...LEVELS].sort((a,b)=>c[b]-c[a]),dominant=completed?ranked[0]:null,second=dominant?ranked.find(l=>l!==dominant&&c[l]>0):null;
+ const avg=arr=>{const z=arr.filter(x=>x!=='Skip');return z.length?z.reduce((s,x)=>s+levelRank(x),0)/z.length:0};const first=seq.slice(0,5),last=seq.slice(-5);let trend='flat';if(first.filter(x=>x!=='Skip').length>=2&&last.filter(x=>x!=='Skip').length>=2){if(avg(last)-avg(first)>=0.8)trend='up';else if(avg(first)-avg(last)>=0.8)trend='down'}
+ return {c,completed,sk,active,dominant,second,seq,trend};
+}
+function periodMessage(h,p){
+ const a=analyzePeriod(h,p),{c,completed,sk,active,dominant,second,trend}=a;if(!completed)return "This habit didn't get much attention during this period. That's okay. When you're ready, start again with a Victory that feels easy to protect.";
+ if(sk===0&&c.Victory===15)return "Victory was your constant. You showed up every time. That's exactly what a minimum is meant to make possible.";
+ if(sk===0&&trend==='up'&&active.length>=3)return `Your effort gradually moved upward through the period, from ${a.seq[0]} toward ${a.seq.at(-1)}. You appeared to have increasing capacity while still keeping Victory available as the foundation.`;
+ if(sk===0&&trend==='down'&&active.length>=3)return `Your effort gradually came down through the period, from higher levels toward ${a.seq.at(-1)}. That's not necessarily a setback—capacity naturally varies, and Victory remained available throughout.`;
+ if(dominant==='Victory'&&second&&c[second]>=Math.max(2,Math.floor(c[dominant]*0.7)))return `Victory was your foundation, with ${second} appearing almost as often. You consistently maintained your minimum and frequently went beyond it.`;
+ if(dominant==='Victory'){let m='Victory was your foundation. You consistently showed up while occasionally going further.';if(c.Outstanding>1)m+=` You reached Outstanding ${c.Outstanding} times.`;if(sk)m+=` There ${sk===1?'was':'were'} ${sk} missed ${sk===1?'day':'days'}.`;return m}
+ if(second&&c[dominant]===c[second]&&active.length===2){let m=`${dominant} and ${second} were equally prominent. You naturally moved between the two levels while maintaining your effort.`;if(sk)m+=` There ${sk===1?'was':'were'} ${sk} missed ${sk===1?'day':'days'}.`;return m}
+ if(dominant==='Very Good'){let m=second&&c[second]>=c[dominant]-2?`Very Good was your dominant pattern, with ${second} close behind. You regularly went beyond your minimum while keeping Victory as a reliable foundation.`:`Very Good was your dominant pattern. You regularly went beyond your minimum while still having Victory as a reliable foundation.`;if(c.Outstanding)m+=` You reached Outstanding ${c.Outstanding} ${c.Outstanding===1?'time':'times'}.`;if(sk)m+=` There ${sk===1?'was':'were'} ${sk} missed ${sk===1?'day':'days'}.`;return m}
+ if(dominant==='Excellent'){let m=second&&c[second]>=c[dominant]-2?`Excellent was your dominant pattern, with ${second} close behind. You consistently had the capacity to go well beyond your minimum.`:`Excellent was your dominant pattern. You consistently had the capacity to go well beyond your minimum.`;if(c.Outstanding)m+=` Outstanding appeared ${c.Outstanding} ${c.Outstanding===1?'time':'times'}.`;if(sk)m+=` There ${sk===1?'was':'were'} ${sk} missed ${sk===1?'day':'days'}.`;return m}
+ if(dominant==='Outstanding'){let m=second&&c[second]>=c[dominant]-2?`Outstanding was your dominant pattern, with ${second} close behind. You went far beyond your minimum on most days. Enjoy the extra effort without turning it into a new minimum.`:`Outstanding was your dominant pattern. You went far beyond your minimum on most days. Enjoy the extra effort without turning it into a new minimum.`;if(sk)m+=` There ${sk===1?'was':'were'} ${sk} missed ${sk===1?'day':'days'}.`;return m}
+ if(sk>=Math.ceil(completed*0.6))return `On the days you showed up, ${dominant} was your dominant pattern. There were ${sk} missed days. The opportunity isn't necessarily to do more—it's to make returning to Victory easier.`;
+ if(active.length>=3){let m=`Your effort varied naturally from ${active[0]} to ${active.at(-1)}. You adapted your effort to your available capacity rather than forcing the same level every day.`;if(sk)m+=` There ${sk===1?'was':'were'} ${sk} missed ${sk===1?'day':'days'}.`;return m}
+ return `${dominant} was your dominant pattern${second?`, with ${second} also present`:''}. Your effort varied naturally across the period.`;
+}
+function levelClass(l){return {Victory:'lv-victory','Very Good':'lv-verygood',Excellent:'lv-excellent',Outstanding:'lv-outstanding',Skip:'lv-skip'}[l]||'lv-skip'}
+function levelCell(l){return `<span class="level-cell ${levelClass(l)}">${esc(l)}</span>`}
+function renderJourneyPeriods(){const sel=$('journeyPeriod'),cur=sel.value;const ps=periodsTouched();sel.innerHTML=ps.map(p=>{const x=periodFromDate(p);return `<option value="${p}" ${p===cur?'selected':''}>${x.start} → ${x.end}</option>`}).join('');if(!sel.value&&ps.length)sel.value=periodFromDate(today()).id}
+function renderJourney(){renderJourneyPeriods();const pid=$('journeyPeriod').value||periodFromDate(today()).id,p={id:pid,start:pid,end:addDays(pid,14)};const hs=S.habits.filter(h=>configFor(h,pid)&&h.createdAt<=p.end);if(!hs.length){$('journeyTable').innerHTML=`<div class="empty">Create habits to begin your Journey.</div>`;$('insights').innerHTML='';return}
+ let rows='';for(let d=parseDate(p.start);d<=parseDate(p.end);d.setDate(d.getDate()+1)){const ds=iso(d);rows+=`<tr><td>${esc(ds)}</td>${hs.map(h=>{const l=rec(ds,h)?.level||'Skip';return `<td>${levelCell(l)}</td>`}).join('')}<td>${esc(dailyMessage(ds))}</td></tr>`}
+ $('journeyTable').innerHTML=`<div class="journey-legend"><div class="legend-item"><span class="legend-dot" style="background:var(--victory)"></span>Victory</div><div class="legend-item"><span class="legend-dot" style="background:var(--verygood)"></span>Very Good</div><div class="legend-item"><span class="legend-dot" style="background:var(--excellent)"></span>Excellent</div><div class="legend-item"><span class="legend-dot" style="background:var(--outstanding)"></span>Outstanding</div><div class="legend-item"><span class="legend-dot" style="background:var(--skip)"></span>Skipped</div></div><div class="wrap"><table><thead><tr><th>Date</th>${hs.map(h=>`<th>${esc(configFor(h,pid).name)}</th>`).join('')}<th>Day reflection</th></tr></thead><tbody>${rows}</tbody></table></div><div class="period-note">Colors show the level reached that day. They are descriptive, not scores.</div>`;
+ $('insights').innerHTML=hs.map(h=>`<div class="insight"><h4>${esc(configFor(h,pid).name)}</h4><p>${esc(periodMessage(h,p))}</p></div>`).join('');
+}
+function renderStart(){const p=periodFromDate(today());$('startPeriod').textContent=`${p.start} → ${p.end}`}
+function renderAll(){renderBuild();renderDo();renderJourney();renderStart()}
+document.querySelectorAll('#nav button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#nav button').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));b.classList.add('active');$(b.dataset.tab).classList.add('active');renderAll()});
+if(!S){S={testStart:today(),habits:[],records:{}};save()}
+$('date').value=today();renderAll();
+let deferredPrompt=null;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;$('installBtn').classList.add('show')});$('installBtn').onclick=async()=>{if(!deferredPrompt)return;deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;$('installBtn').classList.remove('show')};window.addEventListener('appinstalled',()=>$('installBtn').classList.remove('show'));
+if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+</script>
+</body></html>

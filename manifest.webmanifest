@@ -1,0 +1,10 @@
+{
+  "name":"Small Victory",
+  "short_name":"Small Victory",
+  "start_url":"./",
+  "display":"standalone",
+  "background_color":"#f7f4ef",
+  "theme_color":"#30312e",
+  "description":"Start small. Win every day.",
+  "icons":[{"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}
