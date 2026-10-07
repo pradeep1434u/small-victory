@@ -28,6 +28,9 @@ body{background:radial-gradient(circle at 10% 0%,#eef8ff 0,#f8f9ff 38%,#fff8f0 1
 
 .textResult{min-height:44px}.modal-footer{position:sticky;bottom:0;background:rgba(255,255,255,.96);padding-top:12px;display:flex;justify-content:flex-end;gap:8px;border-top:1px solid var(--line)}.modal-scroll{padding-bottom:6px}.habit-modal{max-height:92vh}.level-full{display:inline}.level-short{display:none}@media(max-width:700px){.level-full{display:none}.level-short{display:inline}.do-card{padding:15px}}
 .do-switch{display:flex;gap:8px;margin:0 0 16px}.do-number-input{max-width:220px;margin-top:10px}.do-card .result{margin-top:12px}.activity{margin-top:12px;padding:14px;border-radius:14px}.levelCuePreset{width:100%}
+
+.cue-manager{margin:14px 0}.cue-order-row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px;padding:10px 12px;background:#fff;border:1px solid var(--line);border-radius:12px;margin-top:8px}.cue-order-actions{display:flex;gap:5px}.cue-order-actions button{padding:6px 9px}.do-grid{display:grid;grid-template-columns:minmax(0,1fr) 48px 110px 105px;align-items:center;gap:8px}.do-grid-head{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:900;padding:0 8px 6px}.do-row{background:#fff;border:1px solid var(--line);border-radius:14px;padding:9px 8px;margin-bottom:7px}.do-row .do-name{font-weight:850;min-width:0}.do-row .do-check{display:flex;justify-content:center}.do-row input{margin:0;width:100%;padding:8px}.do-level{text-align:center;font-weight:850}.do-level .level-cell{min-width:70px;font-size:11px}.cue-group-title{margin:18px 0 8px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:900}@media(max-width:700px){.do-grid{grid-template-columns:minmax(0,1fr) 42px 92px 78px}.do-grid-head{font-size:9px}.do-row{padding:8px 5px}.do-level .level-cell{min-width:62px;padding:6px 4px}.level-full{display:none}.level-short{display:inline}.cue-order-row{grid-template-columns:1fr auto}}
+.level-short{display:none}
 </style>
 </head>
 <body>
@@ -71,7 +74,7 @@ body{background:radial-gradient(circle at 10% 0%,#eef8ff 0,#f8f9ff 38%,#fff8f0 1
 </section>
 
 <section id="build" class="panel">
-<div class="head"><div><h2>Habits</h2><span class="small">Define what counts as a Win. Keep it simple.</span></div><button class="primary" onclick="openModal()">+ Add habit</button></div>
+<div class="head"><div><h2>Habits</h2><span class="small">Define what counts as a Win. Keep it simple.</span></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="secondary" onclick="renderCueManager()">Arrange cues</button><button class="primary" onclick="openModal()">+ Add habit</button></div></div>
 <div id="habitList"></div>
 </section>
 
@@ -100,7 +103,7 @@ const LEVELS=["Win","Big Win","Great Win","Outstanding Win"];
 const OLD_TO_NEW={"Victory":"Win","Very Good":"Big Win","Excellent":"Great Win","Outstanding":"Outstanding Win"};
 let S=JSON.parse(localStorage.getItem(KEY)||"null");
 const $=id=>document.getElementById(id), uid=()=>crypto.randomUUID?crypto.randomUUID():Math.random().toString(36).slice(2)+Date.now();
-function normalizeState(){if(!S)return;S.periodAnchor=S.periodAnchor||'2026-10-01';for(const h of S.habits||[]){for(const pid of Object.keys(h.configs||{})){const c=h.configs[pid];if(c.activity&&c.activity.name&&!c.name) c.name=c.activity.name;if(!c.levels)continue;for(const k of Object.keys(c.levels)){if(c.levels[k]&&!c.levels[k].cue)c.levels[k].cue=c.cue||'Morning'}delete c.cue;delete c.activity;}}save()}
+function normalizeState(){if(!S)return;S.periodAnchor=S.periodAnchor||'2026-10-01';S.cueOrder=S.cueOrder||[];for(const h of S.habits||[]){for(const pid of Object.keys(h.configs||{})){const c=h.configs[pid];if(c.activity&&c.activity.name&&!c.name) c.name=c.activity.name;if(!c.levels)continue;for(const k of Object.keys(c.levels)){if(c.levels[k]&&!c.levels[k].cue)c.levels[k].cue=c.cue||'Morning'}delete c.cue;delete c.activity;}}save()}
 
 const iso=d=>{const x=new Date(d);return new Date(x.getTime()-x.getTimezoneOffset()*60000).toISOString().slice(0,10)};
 const today=()=>iso(new Date()), parseDate=s=>new Date(s+"T12:00:00"), addDays=(s,n)=>{const d=parseDate(s);d.setDate(d.getDate()+n);return iso(d)};
@@ -126,7 +129,20 @@ function numericDefs(c){return LEVELS.filter(n=>levelDef(c,n)?.type==='number')}
 function textDefs(c){return LEVELS.filter(n=>levelDef(c,n)?.type==='text')}
 function achievementFromNumber(c,n){if(!Number.isFinite(n)||n<=0)return'Skip';const t=c.levels||{};if(t.Outstanding?.type==='number'&&n>=t.Outstanding.value)return'Outstanding Win';if(t.Great?.type==='number'&&n>=t.Great.value)return'Great Win';if(t.Big?.type==='number'&&n>=t.Big.value)return'Big Win';if(t.Win?.type==='number'&&n>=t.Win.value)return'Win';return'Skip'}
 function achievementFromText(c,value,levelName){return value&&String(value).trim()?(levelName||'Win'):'Skip'}
-function ensureDailyRecord(date,h,value,mode,levelName){if(!S.records[date])S.records[date]={};const c=currentConfig(h,date);let level='Skip';if(c.frequency==='Weekly'){if(mode==='number')level=achievementFromNumber(c,Number(value));else level='Win';S.records[date][h.id]={value:value||'done',completed:level!=='Skip',level};}else if(mode==='text'){level=achievementFromText(c,value,levelName);const old=S.records[date][h.id];if(old&&levelRank(old.level)>levelRank(level))level=old.level;S.records[date][h.id]={value:value,completed:true,level};}else{level=achievementFromNumber(c,Number(value));const old=S.records[date][h.id];if(old&&levelRank(old.level)>levelRank(level))level=old.level;S.records[date][h.id]={value,completed:level!=='Skip',level};}save()}
+function ensureDailyRecord(date,h,value,mode,levelName){
+ if(!S.records[date])S.records[date]={};
+ const c=currentConfig(h,date);
+ let level='Skip';
+ if(c.frequency==='Weekly'){
+   level=mode==='number'?achievementFromNumber(c,Number(value)):(value?'Win':'Skip');
+ }else if(mode==='text'){
+   level=achievementFromText(c,value,levelName);
+ }else{
+   level=achievementFromNumber(c,Number(value));
+ }
+ S.records[date][h.id]={value:value||'done',completed:level!=='Skip',level};
+ save();
+}
 function weeklyCount(h,date){const wk=weeklyKey(date);return Object.keys(S.records||{}).filter(ds=>weeklyKey(ds)===wk&&S.records[ds]?.[h.id]?.completed).length}
 function setDoView(v){doView=v;renderActivities()}
 let doView='cue';
@@ -138,14 +154,47 @@ function toggleLevelType(sel){const d=sel.closest('.activity');d.querySelector('
 function toggleLevelCue(sel){sel.closest('.activity').querySelector('.levelCustomCue').style.display=sel.value==='custom'?'block':'none'}
 function readLevels(){const out={};for(const d of $('levels').children){const name=levelKey(d.dataset.level),type=d.querySelector('.levelType').value;const cp=d.querySelector('.levelCuePreset').value,cue=cp==='custom'?d.querySelector('.levelCustomCue').value.trim():cp;if(cp==='custom'&&!cue)throw Error(`${d.dataset.level} needs a cue.`);if(type==='number'){const v=+d.querySelector('.levelNumber').value;if(d.dataset.level==='Outstanding Win'&&!d.querySelector('.levelNumber').value){out.Outstanding=null;continue}if(!(v>0))throw Error(`${d.dataset.level} needs a positive number.`);out[name]={type:'number',value:v,unit:d.querySelector('.levelUnit').value.trim()||'units',cue}}else{const text=d.querySelector('.levelText').value.trim();if(!text)throw Error(`${d.dataset.level} needs a description.`);out[name]={type:'text',text,cue}}}return out}
 function saveHabit(){try{const name=$('hname').value.trim();if(!name)throw Error('Enter a habit name.');const frequency=$('frequency').value,levels=readLevels();let prev=null;for(const k of ['Win','Big','Great','Outstanding']){const x=levels[k];if(x?.type==='number'){if(prev!==null&&x.value<=prev)throw Error('Numeric Wins must increase from Win upward.');prev=x.value}}const config={name,frequency,levels};if(editingId){const h=S.habits.find(x=>x.id===editingId),pid=periodFromDate(today()).id;h.configs[pid]=config}else{if(S.habits.length>=3)throw Error('The free version supports up to 3 habits.');S.habits.push({id:uid(),createdAt:today(),configs:{[periodFromDate(today()).id]:config}})}save();closeModal();renderAll()}catch(e){alert(e.message)}}
+function renderCueManager(){
+ const hs=displayHabits(today()),list=cueOrderList(hs,today());
+ $('habitList').innerHTML=`<div class="card cue-manager"><div class="head"><div><h3 style="margin:0">Arrange cues</h3><div class="small">Use ↑ and ↓ to decide the order in which cues appear in Do.</div></div><button class="secondary" onclick="renderBuild()">Done</button></div>${list.map((c,i)=>`<div class="cue-order-row"><b>${esc(c)}</b><div class="cue-order-actions"><button class="secondary" onclick="moveCue(${i},-1)" ${i===0?'disabled':''}>↑</button><button class="secondary" onclick="moveCue(${i},1)" ${i===list.length-1?'disabled':''}>↓</button></div></div>`).join('')}</div>`;
+}
+function moveCue(i,dir){const hs=displayHabits(today()),list=cueOrderList(hs,today());const j=i+dir;if(j<0||j>=list.length)return;[list[i],list[j]]=[list[j],list[i]];S.cueOrder=list;save();renderCueManager()}
 function deleteHabit(id){if(!confirm('Remove this habit from future periods? Existing history stays on this device.'))return;const h=S.habits.find(x=>x.id===id);if(h){h.deletedFrom=nextPeriodId(today());save();renderAll()}}
 function renderBuild(){const hs=S.habits.filter(h=>!h.deletedFrom||h.deletedFrom>periodFromDate(today()).id);if(!hs.length){$('habitList').innerHTML='<div class="empty">No habits yet. Start with one habit that feels easy to protect.</div>';return}$('habitList').innerHTML=`<div class="list">${hs.map(h=>{const c=currentConfig(h);return `<div class="habit"><div><h3 style="margin:0 0 4px">${esc(c.name)}</h3><div class="meta">${esc(c.frequency)}</div><div>${LEVELS.map(l=>{const x=levelDef(c,l);return x?`<span class="pill">${esc(l)} · ${esc(x.type==='text'?x.text:x.value+' '+x.unit)} · ${esc(x.cue)}</span>`:''}).join('')}</div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="secondary" onclick="openModal('${h.id}')">Edit</button><button class="secondary" onclick="deleteHabit('${h.id}')">Remove</button></div></div>`}).join('')}</div>`}
 function resultForGroup(h,date,defs){const c=currentConfig(h,date),r=rec(date,h);const nums=defs.filter(n=>levelDef(c,n)?.type==='number'),texts=defs.filter(n=>levelDef(c,n)?.type==='text');let html='';if(texts.length)html+=texts.map(n=>`<button class="secondary" onclick="recordText('${h.id}','${esc(n)}')">${r?.level==='Win'?'✓ ':''}${esc(levelDef(c,n).text)}</button>`).join(' ');if(nums.length)html+=`<input class="do-number-input" type="number" min="0" step="any" value="${r?.value!=null&&Number.isFinite(Number(r.value))?esc(r.value):''}" placeholder="Enter ${esc(nums[0]&&levelDef(c,nums[0]).unit||'result')}" onchange="recordNumber(this,'${h.id}')">`;return html}
-function renderActivities(){const date=$('date').value||today();$('date').max=today();if(date>today()){$('date').value=today();return renderActivities()}const p=periodFromDate(date);$('doPeriod').textContent=`15-day period: ${p.start} → ${p.end}`;const hs=displayHabits(date);$('cueViewBtn').className=doView==='cue'?'primary':'secondary';$('habitViewBtn').className=doView==='habit'?'primary':'secondary';if(!hs.length){$('doList').innerHTML='<div class="empty">Build a habit first, then come back here.</div>';$('daily').innerHTML='';return}if(doView==='habit')renderHabitView(hs,date);else renderCueView(hs,date);$('daily').innerHTML=`<div class="reflection"><b>Today's reflection</b>${esc(dailyMessage(date))}</div>`}
-function renderCueView(hs,date){const groups=[];for(const h of hs){const c=currentConfig(h,date);for(const l of LEVELS){const x=levelDef(c,l);if(x)groups.push({h,l,x,c});}}const order={Morning:1,Afternoon:2,Evening:3,'No cue':4};groups.sort((a,b)=>(order[a.x.cue]||5)-(order[b.x.cue]||5));$('doList').innerHTML=groups.map(g=>`<div class="do-card"><div class="cue">${esc(g.x.cue)}</div><div class="do-title">${esc(g.c.name)}</div><div class="meta">${esc(g.l)} · ${esc(g.x.type==='text'?g.x.text:g.x.value+' '+g.x.unit)}</div>${g.x.type==='text'?`<button class="primary" onclick="recordText('${g.h.id}','${esc(g.l)}')">${rec(date,g.h)?.level==='Win'?'✓ Done':'Done'}</button>`:`<input class="do-number-input" type="number" min="0" step="any" value="${rec(date,g.h)?.value!=null&&Number.isFinite(Number(rec(date,g.h).value))?esc(rec(date,g.h).value):''}" placeholder="Enter ${esc(g.x.unit)}" onchange="recordNumber(this,'${g.h.id}')">`}<div class="result">${rec(date,g.h)?levelCell(rec(date,g.h).level):'Not updated yet'}</div></div>`).join('')}
-function renderHabitView(hs,date){$('doList').innerHTML=hs.map(h=>{const c=currentConfig(h,date),r=rec(date,h),defs=LEVELS.filter(l=>levelDef(c,l));return `<div class="do-card"><div class="do-title">${esc(c.name)}</div><div class="meta">${esc(c.frequency)}</div><div class="threshold-note">${defs.map(l=>{const x=levelDef(c,l);return `${l}: ${x.type==='text'?x.text:x.value+' '+x.unit} · ${x.cue}`}).join('<br>')}</div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">${defs.filter(l=>levelDef(c,l).type==='text').map(l=>`<button class="secondary" onclick="recordText('${h.id}','${esc(l)}')">${r?.level==='Win'?'✓ ':''}${esc(levelDef(c,l).text)}</button>`).join('')}${defs.some(l=>levelDef(c,l).type==='number')?`<input class="do-number-input" type="number" min="0" step="any" value="${r?.value!=null&&Number.isFinite(Number(r.value))?esc(r.value):''}" placeholder="Enter numeric result" onchange="recordNumber(this,'${h.id}')">`:''}</div><div class="result">${r?levelCell(r.level):'Not updated yet'}</div></div>`}).join('')}
+function renderActivities(){
+ const date=$('date').value||today(); $('date').max=today();
+ if(date>today()){$('date').value=today();return renderActivities()}
+ const p=periodFromDate(date); $('doPeriod').textContent=`15-day period: ${p.start} → ${p.end}`;
+ const hs=displayHabits(date);
+ $('cueViewBtn').className=doView==='cue'?'primary':'secondary'; $('habitViewBtn').className=doView==='habit'?'primary':'secondary';
+ if(!hs.length){$('doList').innerHTML='<div class="empty">Build a habit first, then come back here.</div>';$('daily').innerHTML='';return}
+ if(doView==='habit')renderHabitView(hs,date);else renderCueView(hs,date);
+ $('daily').innerHTML=`<div class="reflection"><b>Today's reflection</b>${esc(dailyMessage(date))}</div>`;
+}
+function cueOrderList(hs,date){
+ const defaults=['Morning','After breakfast','Afternoon','After office work','Evening','Before sleeping','No cue'];
+ const found=[]; hs.forEach(h=>{const c=currentConfig(h,date); LEVELS.forEach(l=>{const x=levelDef(c,l);if(x&&!found.includes(x.cue))found.push(x.cue)})});
+ const saved=S.cueOrder||[]; const all=[...saved.filter(x=>found.includes(x)),...defaults.filter(x=>found.includes(x)&&!saved.includes(x)),...found.filter(x=>!saved.includes(x)&&!defaults.includes(x))]; return all;
+}
+function orderedCues(hs,date){const list=cueOrderList(hs,date); const rank=new Map(list.map((x,i)=>[x,i])); return rank}
+function renderCueView(hs,date){
+ const rank=orderedCues(hs,date), groups={};
+ for(const h of hs){const c=currentConfig(h,date); const byCue={};
+   for(const l of LEVELS){const x=levelDef(c,l);if(!x)continue; (byCue[x.cue]??=[]).push({l,x});}
+   for(const [cue,defs] of Object.entries(byCue)){(groups[cue]??=[]).push({h,c,defs});}
+ }
+ const cues=Object.keys(groups).sort((a,b)=>(rank.get(a)??999)-(rank.get(b)??999));
+ $('doList').innerHTML=cues.map(cue=>`<div class="cue-group-title">${esc(cue)}</div><div class="do-grid do-grid-head"><div>Habit</div><div>Done</div><div>Enter</div><div>Level</div></div>${groups[cue].map(g=>{const r=rec(date,g.h);const texts=g.defs.filter(d=>d.x.type==='text');const nums=g.defs.filter(d=>d.x.type==='number');const checked=r?.completed&&r?.level==='Win';return `<div class="do-row do-grid"><div class="do-name">${esc(g.c.name)}</div><div class="do-check">${texts.length?`<input type="checkbox" ${checked?'checked':''} onchange="recordTextCheck(this,'${g.h.id}','${esc(texts[0].l)}')">`:'—'}</div><div>${nums.length?`<input type="number" min="0" step="any" value="${r?.value!=null&&Number.isFinite(Number(r.value))?esc(r.value):''}" placeholder="${esc(nums[0].x.unit||'result')}" onchange="recordNumber(this,'${g.h.id}')">`:'—'}</div><div class="do-level">${r?levelCell(r.level):'—'}</div></div>`}).join('')}`).join('');
+}
+function renderHabitView(hs,date){
+ $('doList').innerHTML=`<div class="do-grid do-grid-head"><div>Habit</div><div>Done</div><div>Enter</div><div>Level</div></div>`+hs.map(h=>{const c=currentConfig(h,date),r=rec(date,h),defs=LEVELS.map(l=>levelDef(c,l)).filter(Boolean),texts=defs.filter(x=>x.type==='text'),nums=defs.filter(x=>x.type==='number');return `<div class="do-row do-grid"><div class="do-name">${esc(c.name)}</div><div class="do-check">${texts.length?`<input type="checkbox" ${r?.level==='Win'?'checked':''} onchange="recordTextCheck(this,'${h.id}','Win')">`:'—'}</div><div>${nums.length?`<input type="number" min="0" step="any" value="${r?.value!=null&&Number.isFinite(Number(r.value))?esc(r.value):''}" placeholder="${esc(nums[0].unit||'result')}" onchange="recordNumber(this,'${h.id}')">`:'—'}</div><div class="do-level">${r?levelCell(r.level):'—'}</div></div>`}).join('');
+}
+function recordTextCheck(el,hid,levelName){const h=S.habits.find(x=>x.id===hid);const date=$('date').value||today();const c=currentConfig(h,date),x=levelDef(c,levelName);if(!x)return;if(el.checked)ensureDailyRecord(date,h,x.text,'text',levelName);else{if(S.records[date])delete S.records[date][hid];save();}renderAll()}
+
 function recordText(hid,levelName){const h=S.habits.find(x=>x.id===hid);const date=$('date').value||today();const c=currentConfig(h,date),x=levelDef(c,levelName);if(!x)return;ensureDailyRecord(date,h,x.text,'text',levelName);renderAll()}
 function recordNumber(el,hid){const h=S.habits.find(x=>x.id===hid);const date=$('date').value||today();ensureDailyRecord(date,h,el.value,'number');renderAll()}
+
 function levelSummary(c){return LEVELS.map(l=>{const k=l==='Win'?'Win':l.split(' ')[0],x=c.levels[k];if(!x)return'';return `${l}: ${x.type==='text'?x.text:x.value+' '+x.unit}`}).filter(Boolean).join(' · ')}
 function toggleResultType(sel){const card=sel.closest('.do-card');card.querySelector('.numberResult').style.display=sel.value==='number'?'block':'none';card.querySelector('.textResultBox').style.display=sel.value==='text'?'block':'none'}
 function recordText(el,hid){const h=S.habits.find(x=>x.id===hid);if(!el.value.trim()){if(S.records[ $('date').value])delete S.records[$('date').value][hid]}else ensureDailyRecord($('date').value,h,el.value.trim());renderAll()}
