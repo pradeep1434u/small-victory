@@ -1,4 +1,4 @@
-const CACHE='win-today-pwa-v10';
+const CACHE='win-today-pwa-v9';
 const ASSETS=['./','./index.html','./manifest.webmanifest','./icon.svg','./sw.js'];
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',event=>event.waitUntil(self.clients.claim()));

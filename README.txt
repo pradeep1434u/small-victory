@@ -7,7 +7,7 @@ V3 changes:
 - Activities are sorted by cue.
 - Morning / Afternoon / Evening / No cue plus custom cue text.
 - Daily and Weekly habits. Weekly habits use completion counts.
-- Every level can be Text or Number. Example: Win = “Complete my pledge”, Big Win = 15 minutes, Great Win = 30 minutes, Outstanding Win = 60 minutes.
+- Every level can be Text or Number. Example: Win = “Complete my pledge”, Big Win = 15 minutes, Great Win = 30 minutes, Mega Win = 60 minutes.
 - Completing an activity automatically updates its linked habit record.
 - 15-day history and reflections remain.
 
