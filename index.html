@@ -33,18 +33,7 @@ body{background:radial-gradient(circle at 10% 0%,#eef8ff 0,#f8f9ff 38%,#fff8f0 1
 .level-short{display:none}
 </style>
 
-<style id="wt-v15-build-css">
-.wt-build-level-editor{margin:16px 0}.wt-build-eyebrow{font-size:10px;letter-spacing:.12em;opacity:.6;font-weight:700}.wt-build-head h3{margin:3px 0 12px}
-.wt-level-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
-.wt-level-card{border:1px solid rgba(0,0,0,.09);border-radius:16px;padding:10px 8px;background:#fff;min-width:0}
-.wt-level-card .wt-level-title{font-size:11px;font-weight:800;margin-bottom:9px}.wt-level-card label{display:block;font-size:9px;opacity:.62;margin:7px 0 4px}
-.wt-level-card input{width:100%;box-sizing:border-box;border:1px solid rgba(0,0,0,.12);border-radius:8px;padding:7px 5px;font-size:11px}
-.wt-type-row{display:flex;gap:3px;margin-top:5px}.wt-type-row button{flex:1;border:1px solid rgba(0,0,0,.1);background:#f7f7f7;border-radius:7px;font-size:9px;padding:5px 2px}.wt-type-row button.active{background:#111;color:#fff}
-.wt-win .wt-level-title{color:#218b55}.wt-big .wt-level-title{color:#3678d4}.wt-great .wt-level-title{color:#c88700}.wt-mega .wt-level-title{color:#8145a5}
-.wt-preview{margin-top:12px;border-radius:15px;padding:12px;background:rgba(70,120,220,.07)}.wt-preview strong{font-size:12px}
-.wt-preview-row{display:flex;gap:7px;padding:7px 0;border-bottom:1px solid rgba(0,0,0,.06);font-size:11px}.wt-preview-row:last-child{border-bottom:0}
-@media(max-width:700px){.wt-level-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-</style>
+
 </head>
 <body>
 <div class="app">
@@ -110,43 +99,57 @@ body{background:radial-gradient(circle at 10% 0%,#eef8ff 0,#f8f9ff 38%,#fff8f0 1
 <div class="notice">Each Win level can have its own cue. For example, a pledge can be a morning Win while 15/30/60 minutes can appear after evening work.</div>
 <div class="notice"><b>Define your Wins.</b><br>Each level can be text or numeric. For example: Win = “Complete my pledge”, Big Win = 15 minutes, Great Win = 30 minutes.</div>
 <div id="levels"></div></div><div class="modal-footer"><button class="secondary" onclick="closeModal()">Cancel</button>
-<section id="wt-build-level-editor" class="wt-build-level-editor">
-<div class="wt-build-head"><div class="wt-build-eyebrow">YOUR WINS</div><h3>Define what each level means</h3></div>
-<div class="wt-level-grid">
-
-<article class="wt-level-card wt-win">
-<div class="wt-level-title">WIN</div>
-<label>What counts?</label><input data-wt-level="0" class="wt-level-value" placeholder="e.g. Complete pledge">
-<div class="wt-type-row"><button type="button" data-wt-type="text" data-wt-level="0">Text</button><button type="button" data-wt-type="number" data-wt-level="0">Number</button></div>
-<label>Cue</label><input data-wt-cue="0" class="wt-level-cue" placeholder="e.g. Morning">
-</article>
 
 
-<article class="wt-level-card wt-big">
-<div class="wt-level-title">BIG WIN</div>
-<label>What counts?</label><input data-wt-level="1" class="wt-level-value" placeholder="e.g. 15">
-<div class="wt-type-row"><button type="button" data-wt-type="text" data-wt-level="1">Text</button><button type="button" data-wt-type="number" data-wt-level="1">Number</button></div>
-<label>Cue</label><input data-wt-cue="1" class="wt-level-cue" placeholder="e.g. After office work">
-</article>
 
-
-<article class="wt-level-card wt-great">
-<div class="wt-level-title">GREAT WIN</div>
-<label>What counts?</label><input data-wt-level="2" class="wt-level-value" placeholder="e.g. 30">
-<div class="wt-type-row"><button type="button" data-wt-type="text" data-wt-level="2">Text</button><button type="button" data-wt-type="number" data-wt-level="2">Number</button></div>
-<label>Cue</label><input data-wt-cue="2" class="wt-level-cue" placeholder="e.g. After office work">
-</article>
-
-
-<article class="wt-level-card wt-mega">
-<div class="wt-level-title">MEGA WIN</div>
-<label>What counts?</label><input data-wt-level="3" class="wt-level-value" placeholder="e.g. 60">
-<div class="wt-type-row"><button type="button" data-wt-type="text" data-wt-level="3">Text</button><button type="button" data-wt-type="number" data-wt-level="3">Number</button></div>
-<label>Cue</label><input data-wt-cue="3" class="wt-level-cue" placeholder="e.g. After office work">
-</article>
-
+<style id="wt-v16-build-table">
+.wt-build-table-wrap{width:100%;overflow-x:auto;margin:14px 0}
+.wt-build-table{width:100%;border-collapse:separate;border-spacing:0;table-layout:fixed;background:#fff;border:1px solid rgba(0,0,0,.09);border-radius:16px;overflow:hidden}
+.wt-build-table th,.wt-build-table td{padding:9px 7px;border-right:1px solid rgba(0,0,0,.07);border-bottom:1px solid rgba(0,0,0,.07);vertical-align:top}
+.wt-build-table th:last-child,.wt-build-table td:last-child{border-right:0}
+.wt-build-table tr:last-child td{border-bottom:0}
+.wt-build-table th{font-size:11px;text-align:center;font-weight:800}
+.wt-build-table th:first-child{width:82px;text-align:left}
+.wt-build-table td:first-child{font-size:10px;font-weight:700;opacity:.65}
+.wt-build-table input,.wt-build-table select{width:100%;box-sizing:border-box;border:1px solid rgba(0,0,0,.12);border-radius:7px;padding:7px 5px;font-size:11px;background:#fff}
+.wt-build-table .level-win{color:#218b55}.wt-build-table .level-big{color:#3678d4}.wt-build-table .level-great{color:#c88700}.wt-build-table .level-mega{color:#8145a5}
+.wt-build-preview{margin-top:12px;padding:12px;border-radius:14px;background:rgba(70,120,220,.07);font-size:11px}
+.wt-build-preview-row{padding:5px 0}
+@media(max-width:500px){
+ .wt-build-table{min-width:520px}
+ .wt-build-table-wrap{overflow-x:auto}
+}
+</style>
+<section id="wt-build-level-table">
+<div class="wt-build-table-wrap">
+<table class="wt-build-table">
+<thead><tr>
+<th></th>
+<th class="level-win">WIN</th>
+<th class="level-big">BIG WIN</th>
+<th class="level-great">GREAT WIN</th>
+<th class="level-mega">MEGA WIN</th>
+</tr></thead>
+<tbody>
+<tr><td>What counts</td>
+<td><input data-wt-table-level="0" placeholder="e.g. Complete pledge"></td>
+<td><input data-wt-table-level="1" placeholder="e.g. 15"></td>
+<td><input data-wt-table-level="2" placeholder="e.g. 30"></td>
+<td><input data-wt-table-level="3" placeholder="e.g. 60"></td></tr>
+<tr><td>Type</td>
+<td><select data-wt-table-type="0"><option value="text">Text</option><option value="number">Number</option></select></td>
+<td><select data-wt-table-type="1"><option value="number">Number</option><option value="text">Text</option></select></td>
+<td><select data-wt-table-type="2"><option value="number">Number</option><option value="text">Text</option></select></td>
+<td><select data-wt-table-type="3"><option value="number">Number</option><option value="text">Text</option></select></td></tr>
+<tr><td>Cue</td>
+<td><input data-wt-table-cue="0" placeholder="Morning"></td>
+<td><input data-wt-table-cue="1" placeholder="After office"></td>
+<td><input data-wt-table-cue="2" placeholder="After office"></td>
+<td><input data-wt-table-cue="3" placeholder="After office"></td></tr>
+</tbody>
+</table>
 </div>
-<div class="wt-preview"><strong>How this habit works</strong><div id="wt-preview-rows"></div></div>
+<div class="wt-build-preview"><strong>How this habit works</strong><div id="wt-build-preview-rows"></div></div>
 </section>
 
 <button class="primary" onclick="saveHabit()">Save habit</button></div></div></div>
@@ -338,26 +341,46 @@ normalizeState();$('date').max=today();$('date').value=today();renderAll();
 let deferredPrompt=null;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;$('installBtn').classList.add('show')});$('installBtn').onclick=async()=>{if(!deferredPrompt)return;deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;$('installBtn').classList.remove('show')};window.addEventListener('appinstalled',()=>$('installBtn').classList.remove('show'));if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 </script>
 
-<script id="wt-v15-build-js">
+
+
+<script id="wt-v16-build-js">
 (function(){
  const names=['Win','Big Win','Great Win','Mega Win'];
- const key='win_today_build_levels_v15';
- const esc=v=>String(v||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
- function state(){try{return JSON.parse(localStorage.getItem(key))||names.map((name,i)=>({name,type:i?'number':'text',value:'',cue:''}))}catch(e){return names.map((name,i)=>({name,type:i?'number':'text',value:'',cue:''}))}}
+ const key='win_today_build_table_v16';
+ const defaults=()=>names.map((name,i)=>({name,type:i===0?'text':'number',value:'',cue:''}));
+ function get(){try{return JSON.parse(localStorage.getItem(key))||defaults()}catch(e){return defaults()}}
+ function put(s){localStorage.setItem(key,JSON.stringify(s))}
+ function esc(v){return String(v||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
  function render(){
-  const r=document.getElementById('wt-build-level-editor');if(!r)return;
-  const s=state();s.forEach((x,i)=>{
-   const v=r.querySelector('[data-wt-level="'+i+'"]'),c=r.querySelector('[data-wt-cue="'+i+'"]');
-   if(v)v.value=x.value||'';if(c)c.value=x.cue||'';
-   r.querySelectorAll('[data-wt-type][data-wt-level="'+i+'"]').forEach(b=>b.classList.toggle('active',b.dataset.wtType===x.type));
+  const r=document.getElementById('wt-build-level-table'); if(!r)return;
+  const s=get();
+  s.forEach((x,i)=>{
+   const v=r.querySelector('[data-wt-table-level="'+i+'"]');
+   const t=r.querySelector('[data-wt-table-type="'+i+'"]');
+   const c=r.querySelector('[data-wt-table-cue="'+i+'"]');
+   if(v && document.activeElement!==v)v.value=x.value||'';
+   if(t)t.value=x.type||'number';
+   if(c && document.activeElement!==c)c.value=x.cue||'';
   });
-  const p=r.querySelector('#wt-preview-rows');
-  p.innerHTML=s.filter(x=>x.value||x.cue).map((x,i)=>'<div class="wt-preview-row"><b>'+names[i]+'</b><span>'+esc(x.value)+'</span><span>'+esc(x.cue)+'</span></div>').join('')||'<div class="wt-preview-row">Add your levels above.</div>';
+  const p=r.querySelector('#wt-build-preview-rows');
+  p.innerHTML=s.filter(x=>x.value||x.cue).map((x,i)=>
+    '<div class="wt-build-preview-row"><b>'+names[i]+'</b> — '+esc(x.value)+(x.cue?' · '+esc(x.cue):'')+'</div>'
+  ).join('') || '<div class="wt-build-preview-row">Define your levels above.</div>';
  }
  document.addEventListener('DOMContentLoaded',()=>{
-  const r=document.getElementById('wt-build-level-editor');if(!r)return;render();
-  r.addEventListener('input',e=>{const s=state(),i=e.target.dataset.wtLevel??e.target.dataset.wtCue;if(i!==undefined){if(e.target.dataset.wtLevel!==undefined)s[+i].value=e.target.value;else s[+i].cue=e.target.value;localStorage.setItem(key,JSON.stringify(s));render();}});
-  r.addEventListener('click',e=>{const b=e.target.closest('[data-wt-type]');if(!b)return;const s=state(),i=+b.dataset.wtLevel;s[i].type=b.dataset.wtType;localStorage.setItem(key,JSON.stringify(s));render();});
+  const r=document.getElementById('wt-build-level-table');if(!r)return;
+  render();
+  r.addEventListener('input',e=>{
+   const s=get();
+   if(e.target.dataset.wtTableLevel!==undefined)s[+e.target.dataset.wtTableLevel].value=e.target.value;
+   if(e.target.dataset.wtTableCue!==undefined)s[+e.target.dataset.wtTableCue].cue=e.target.value;
+   put(s);render();
+  });
+  r.addEventListener('change',e=>{
+   const s=get();
+   if(e.target.dataset.wtTableType!==undefined)s[+e.target.dataset.wtTableType].type=e.target.value;
+   put(s);render();
+  });
  });
 })();
 </script>
