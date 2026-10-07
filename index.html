@@ -32,6 +32,62 @@ body{background:radial-gradient(circle at 10% 0%,#eef8ff 0,#f8f9ff 38%,#fff8f0 1
 .cue-manager{margin:14px 0}.cue-order-row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px;padding:10px 12px;background:#fff;border:1px solid var(--line);border-radius:12px;margin-top:8px}.cue-order-actions{display:flex;gap:5px}.cue-order-actions button{padding:6px 9px}.do-grid{display:grid;grid-template-columns:minmax(0,1fr) 48px 110px 105px;align-items:center;gap:8px}.do-grid-head{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:900;padding:0 8px 6px}.do-row{background:#fff;border:1px solid var(--line);border-radius:14px;padding:9px 8px;margin-bottom:7px}.do-row .do-name{font-weight:850;min-width:0}.do-row .do-check{display:flex;justify-content:center}.do-row input{margin:0;width:100%;padding:8px}.do-level{text-align:center;font-weight:850}.do-level .level-cell{min-width:70px;font-size:11px}.cue-group-title{margin:18px 0 8px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:900}@media(max-width:700px){.do-grid{grid-template-columns:minmax(0,1fr) 42px 92px 78px}.do-grid-head{font-size:9px}.do-row{padding:8px 5px}.do-level .level-cell{min-width:62px;padding:6px 4px}.level-full{display:none}.level-short{display:inline}.cue-order-row{grid-template-columns:1fr auto}}
 .level-short{display:none}
 </style>
+
+<style id="WIN_TODAY_UI_V14">
+/* WIN TODAY V14 — compact level columns */
+.win-level-grid-v14{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:8px;
+  width:100%;
+}
+.win-level-card-v14{
+  min-width:0;
+  border-radius:14px;
+  padding:10px 8px;
+  background:var(--card,#fff);
+  border:1px solid rgba(0,0,0,.08);
+}
+.win-level-card-v14 h4{
+  margin:0 0 7px;
+  font-size:11px;
+  letter-spacing:.04em;
+}
+.win-level-card-v14 input,
+.win-level-card-v14 select{
+  width:100%;
+  box-sizing:border-box;
+  font-size:12px;
+  padding:7px 6px;
+}
+.win-level-card-v14 .cue{
+  margin-top:7px;
+  font-size:10px;
+  opacity:.72;
+}
+.win-preview-v14{
+  margin-top:14px;
+  padding:14px;
+  border-radius:16px;
+  background:linear-gradient(135deg,rgba(80,140,255,.10),rgba(80,210,150,.10));
+}
+.win-preview-v14 .preview-row{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:7px 0;
+  border-bottom:1px solid rgba(0,0,0,.06);
+  font-size:13px;
+}
+.win-preview-v14 .preview-row:last-child{border-bottom:0}
+@media(max-width:430px){
+  .win-level-grid-v14{gap:5px}
+  .win-level-card-v14{padding:8px 5px;border-radius:12px}
+  .win-level-card-v14 h4{font-size:9px}
+  .win-level-card-v14 input,.win-level-card-v14 select{font-size:10px;padding:6px 3px}
+  .win-level-card-v14 .cue{font-size:9px}
+}
+</style>
 </head>
 <body>
 <div class="app">
@@ -143,8 +199,13 @@ function calculateRecordLevel(c,r){
  const n=hasNumber?Number(r.numberValue):NaN;
  let level='Skip';
  if(hasNumber && Number.isFinite(n) && n>0) level=achievementFromNumber(c,n);
+ // A text-based Win is the foundation for every higher numeric level.
+ // If the foundation is not completed, the numeric achievement drops by one level.
+ if(hasTextWin && !textDone && level!=='Skip'){
+   const down={"Mega Win":"Great Win","Great Win":"Big Win","Big Win":"Win","Win":"Win"};
+   level=down[level]||level;
+ }
  if(textDone) level=level==='Skip'?'Win':level;
- if(hasTextWin && !textDone && level==='Mega Win') level='Great Win';
  if(hasTextWin && !textDone && !hasNumber) level='Skip';
  if(!hasTextWin && !hasNumber && !textDone) level='Skip';
  return level;
