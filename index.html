@@ -33,7 +33,11 @@ body{background:radial-gradient(circle at 10% 0%,#eef8ff 0,#f8f9ff 38%,#fff8f0 1
 .level-short{display:none}
 </style>
 
-
+<style id="wt-v17-build">
+.wt-build-habit{background:#fff;border:1px solid #e2e7ef;border-radius:18px;padding:14px;margin-bottom:14px;box-shadow:0 7px 20px rgba(31,48,82,.05)}
+.wt-build-name{display:flex;gap:8px;align-items:center;margin-bottom:12px}.wt-build-name input{flex:1;font-size:17px;font-weight:800;border:0;border-bottom:1px solid #dfe5ef;padding:7px 3px;background:transparent}.wt-build-name select{border:1px solid #dfe5ef;border-radius:9px;padding:8px;font-size:11px;background:#fff}
+.wt-build-table{min-width:0}.wt-build-table th,.wt-build-table td{padding:8px 6px}.wt-build-table th:first-child{width:78px}.wt-build-input,.wt-build-select{width:100%;box-sizing:border-box;border:1px solid #dce3ed;border-radius:8px;padding:7px 5px;font-size:11px;background:#fff}.wt-number-cell{display:flex;gap:4px}.wt-unit-input{width:54px;box-sizing:border-box;border:1px solid #dce3ed;border-radius:8px;padding:7px 4px;font-size:10px}.wt-build-habit .level-win{color:#218b55}.wt-build-habit .level-big{color:#3678d4}.wt-build-habit .level-great{color:#c88700}.wt-build-habit .level-mega{color:#8145a5}
+</style>
 </head>
 <body>
 <div class="app">
@@ -76,7 +80,7 @@ body{background:radial-gradient(circle at 10% 0%,#eef8ff 0,#f8f9ff 38%,#fff8f0 1
 </section>
 
 <section id="build" class="panel">
-<div class="head"><div><h2>Habits</h2><span class="small">Define what counts as a Win. Keep it simple.</span></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="secondary" onclick="renderCueManager()">Arrange cues</button><button class="primary" onclick="openModal()">+ Add habit</button></div></div>
+<div class="head"><div><h2>Build</h2><span class="small">One simple table. Edit your habit directly here.</span></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="secondary" onclick="renderCueManager()">Arrange cues</button><button class="primary" onclick="addBuildHabit()">+ Add habit</button></div></div>
 <div id="habitList"></div>
 </section>
 
@@ -93,66 +97,7 @@ body{background:radial-gradient(circle at 10% 0%,#eef8ff 0,#f8f9ff 38%,#fff8f0 1
 <section id="tutorial" class="panel"><div class="head"><div><h2>Tutorial</h2><span class="small">A quick guide to WIN TODAY.</span></div></div><div class="tutorial-card"><div class="step"><div class="stepnum">1</div><div><b>Build a habit</b><div class="small">Give it one activity and define what Win means to you.</div></div></div><div class="step"><div class="stepnum">2</div><div><b>Use text or numbers</b><div class="small">A level can be qualitative, like “Complete my pledge”, or numeric, like 15 minutes.</div></div></div><div class="step"><div class="stepnum">3</div><div><b>Give it a cue</b><div class="small">Morning, after breakfast, 7 PM, or any custom cue you naturally remember.</div></div></div><div class="step"><div class="stepnum">4</div><div><b>Do the activity</b><div class="small">Complete it from Activities. The linked Habit updates automatically.</div></div></div><div class="step"><div class="stepnum">5</div><div><b>Review your Journey</b><div class="small">Understand your pattern—not to judge yourself.</div></div></div></div><div class="section-label">The four levels</div><div class="grid"><div class="card"><h3>🟢 Win</h3><p>Your minimum. A real success.</p></div><div class="card"><h3>🔵 Big Win</h3><p>You went beyond your minimum.</p></div><div class="card"><h3>🟡 Great Win</h3><p>You went substantially further.</p></div><div class="card"><h3>🟣 Mega Win</h3><p>You went far beyond your minimum. Enjoy it—don't turn it into a new minimum.</p></div></div></section></section>
 </main></div>
 
-<div id="modal" class="modal"><div class="box habit-modal"><button class="close" onclick="closeModal()">×</button><div class="modal-heading"><div class="modal-icon">✦</div><div><div class="section-label" style="margin:0">BUILD YOUR HABIT</div><h2 id="modalTitle">Add habit</h2><p>One habit, one activity, flexible Wins.</p></div></div><div class="modal-scroll"><div id="editNotice" class="notice" style="display:none"></div>
-<label>Habit name</label><input id="hname" placeholder="e.g. Meditation">
-<label>Frequency</label><select id="frequency"><option value="Daily">Daily</option><option value="Weekly">Weekly</option></select>
-<div class="notice">Each Win level can have its own cue. For example, a pledge can be a morning Win while 15/30/60 minutes can appear after evening work.</div>
-<div class="notice"><b>Define your Wins.</b><br>Each level can be text or numeric. For example: Win = “Complete my pledge”, Big Win = 15 minutes, Great Win = 30 minutes.</div>
-<div id="levels"></div></div><div class="modal-footer"><button class="secondary" onclick="closeModal()">Cancel</button>
-
-
-
-<style id="wt-v16-build-table">
-.wt-build-table-wrap{width:100%;overflow-x:auto;margin:14px 0}
-.wt-build-table{width:100%;border-collapse:separate;border-spacing:0;table-layout:fixed;background:#fff;border:1px solid rgba(0,0,0,.09);border-radius:16px;overflow:hidden}
-.wt-build-table th,.wt-build-table td{padding:9px 7px;border-right:1px solid rgba(0,0,0,.07);border-bottom:1px solid rgba(0,0,0,.07);vertical-align:top}
-.wt-build-table th:last-child,.wt-build-table td:last-child{border-right:0}
-.wt-build-table tr:last-child td{border-bottom:0}
-.wt-build-table th{font-size:11px;text-align:center;font-weight:800}
-.wt-build-table th:first-child{width:82px;text-align:left}
-.wt-build-table td:first-child{font-size:10px;font-weight:700;opacity:.65}
-.wt-build-table input,.wt-build-table select{width:100%;box-sizing:border-box;border:1px solid rgba(0,0,0,.12);border-radius:7px;padding:7px 5px;font-size:11px;background:#fff}
-.wt-build-table .level-win{color:#218b55}.wt-build-table .level-big{color:#3678d4}.wt-build-table .level-great{color:#c88700}.wt-build-table .level-mega{color:#8145a5}
-.wt-build-preview{margin-top:12px;padding:12px;border-radius:14px;background:rgba(70,120,220,.07);font-size:11px}
-.wt-build-preview-row{padding:5px 0}
-@media(max-width:500px){
- .wt-build-table{min-width:520px}
- .wt-build-table-wrap{overflow-x:auto}
-}
-</style>
-<section id="wt-build-level-table">
-<div class="wt-build-table-wrap">
-<table class="wt-build-table">
-<thead><tr>
-<th></th>
-<th class="level-win">WIN</th>
-<th class="level-big">BIG WIN</th>
-<th class="level-great">GREAT WIN</th>
-<th class="level-mega">MEGA WIN</th>
-</tr></thead>
-<tbody>
-<tr><td>What counts</td>
-<td><input data-wt-table-level="0" placeholder="e.g. Complete pledge"></td>
-<td><input data-wt-table-level="1" placeholder="e.g. 15"></td>
-<td><input data-wt-table-level="2" placeholder="e.g. 30"></td>
-<td><input data-wt-table-level="3" placeholder="e.g. 60"></td></tr>
-<tr><td>Type</td>
-<td><select data-wt-table-type="0"><option value="text">Text</option><option value="number">Number</option></select></td>
-<td><select data-wt-table-type="1"><option value="number">Number</option><option value="text">Text</option></select></td>
-<td><select data-wt-table-type="2"><option value="number">Number</option><option value="text">Text</option></select></td>
-<td><select data-wt-table-type="3"><option value="number">Number</option><option value="text">Text</option></select></td></tr>
-<tr><td>Cue</td>
-<td><input data-wt-table-cue="0" placeholder="Morning"></td>
-<td><input data-wt-table-cue="1" placeholder="After office"></td>
-<td><input data-wt-table-cue="2" placeholder="After office"></td>
-<td><input data-wt-table-cue="3" placeholder="After office"></td></tr>
-</tbody>
-</table>
-</div>
-<div class="wt-build-preview"><strong>How this habit works</strong><div id="wt-build-preview-rows"></div></div>
-</section>
-
-<button class="primary" onclick="saveHabit()">Save habit</button></div></div></div>
+<div id="modal" style="display:none!important"></div>
 
 <script>const KEY="winTodayPWA4";
 const LEVELS=["Win","Big Win","Great Win","Mega Win"];
@@ -232,7 +177,13 @@ function renderCueManager(){
 }
 function moveCue(i,dir){const hs=displayHabits(today()),list=cueOrderList(hs,today());const j=i+dir;if(j<0||j>=list.length)return;[list[i],list[j]]=[list[j],list[i]];S.cueOrder=list;save();renderCueManager()}
 function deleteHabit(id){if(!confirm('Remove this habit from future periods? Existing history stays on this device.'))return;const h=S.habits.find(x=>x.id===id);if(h){h.deletedFrom=nextPeriodId(today());save();renderAll()}}
-function renderBuild(){const hs=S.habits.filter(h=>!h.deletedFrom||h.deletedFrom>periodFromDate(today()).id);if(!hs.length){$('habitList').innerHTML='<div class="empty">No habits yet. Start with one habit that feels easy to protect.</div>';return}$('habitList').innerHTML=`<div class="list">${hs.map(h=>{const c=currentConfig(h);return `<div class="habit"><div><h3 style="margin:0 0 4px">${esc(c.name)}</h3><div class="meta">${esc(c.frequency)}</div><div>${LEVELS.map(l=>{const x=levelDef(c,l);return x?`<span class="pill">${esc(l)} · ${esc(x.type==='text'?x.text:x.value+' '+x.unit)} · ${esc(x.cue)}</span>`:''}).join('')}</div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="secondary" onclick="openModal('${h.id}')">Edit</button><button class="secondary" onclick="deleteHabit('${h.id}')">Remove</button></div></div>`}).join('')}</div>`}
+function buildLevelCell(h,c,k,i){const x=levelDef(c,k)||{type:i===0?'text':'number',value:'',text:'',unit:'minutes',cue:'Morning'};const type=x.type||'number';return type==='text'?`<input class="wt-build-input" value="${esc(x.text||'')}" placeholder="What counts?" oninput="updateBuildCell('${h.id}','${k}','text',this.value)">`:`<div class="wt-number-cell"><input class="wt-build-input" type="number" min="0" step="any" value="${x.value??''}" placeholder="e.g. 15" oninput="updateBuildCell('${h.id}','${k}','value',this.value)"><input class="wt-unit-input" value="${esc(x.unit||'minutes')}" placeholder="unit" oninput="updateBuildCell('${h.id}','${k}','unit',this.value)"></div>`}
+function buildTable(h,c){const ks=['Win','Big','Great','Mega'];return `<div class="wt-build-habit"><div class="wt-build-name"><input value="${esc(c.name)}" aria-label="Habit name" oninput="updateBuildName('${h.id}',this.value)"><select onchange="updateBuildFrequency('${h.id}',this.value)"><option ${c.frequency==='Daily'?'selected':''}>Daily</option><option ${c.frequency==='Weekly'?'selected':''}>Weekly</option></select><button class="secondary" onclick="deleteHabit('${h.id}')">Remove</button></div><div class="wt-build-table-wrap"><table class="wt-build-table"><thead><tr><th></th>${ks.map((k,i)=>`<th class="level-${['win','big','great','mega'][i]}">${k==='Great'?'GREAT WIN':k==='Big'?'BIG WIN':k==='Mega'?'MEGA WIN':'WIN'}</th>`).join('')}</tr></thead><tbody><tr><td>What counts</td>${ks.map((k,i)=>`<td>${buildLevelCell(h,c,k,i)}</td>`).join('')}</tr><tr><td>Type</td>${ks.map((k,i)=>{const x=levelDef(c,k)||{type:i===0?'text':'number'};return `<td><select class="wt-build-select" onchange="updateBuildCell('${h.id}','${k}','type',this.value)"><option value="text" ${x.type==='text'?'selected':''}>Text</option><option value="number" ${x.type==='number'?'selected':''}>Number</option></select></td>`}).join('')}</tr><tr><td>Cue</td>${ks.map(k=>{const x=levelDef(c,k)||{};return `<td><input class="wt-build-input" value="${esc(x.cue||'')}" placeholder="e.g. Morning" oninput="updateBuildCell('${h.id}','${k}','cue',this.value)"></td>`}).join('')}</tr></tbody></table></div></div>`}
+function renderBuild(){const hs=S.habits.filter(h=>!h.deletedFrom||h.deletedFrom>periodFromDate(today()).id);if(!hs.length){$('habitList').innerHTML='<div class="empty">No habits yet. Add your first habit.</div>';return}$('habitList').innerHTML=hs.map(h=>buildTable(h,currentConfig(h))).join('')}
+function addBuildHabit(){if(S.habits.length>=3){alert('The free version supports up to 3 habits.');return}const pid=periodFromDate(today()).id;S.habits.push({id:uid(),createdAt:today(),configs:{[pid]:{name:'New habit',frequency:'Daily',levels:{Win:{type:'text',text:'Complete the Win',cue:'Morning'},Big:{type:'number',value:15,unit:'minutes',cue:'Morning'},Great:{type:'number',value:30,unit:'minutes',cue:'Morning'}}}}});save();renderBuild()}
+function updateBuildName(id,v){const h=S.habits.find(x=>x.id===id);if(!h)return;currentConfig(h).name=v;save()}
+function updateBuildFrequency(id,v){const h=S.habits.find(x=>x.id===id);if(!h)return;currentConfig(h).frequency=v;save()}
+function updateBuildCell(id,k,field,v){const h=S.habits.find(x=>x.id===id);if(!h)return;const c=currentConfig(h);c.levels=c.levels||{};const x=c.levels[k]||{type:'number',value:'',unit:'minutes',cue:'Morning'};if(field==='type'){x.type=v;if(v==='text'){x.text=x.text||''}else{x.value=x.value||'';x.unit=x.unit||'minutes'}}else if(field==='value'){x.value=v===''?'':Number(v)}else{x[field]=v}c.levels[k]=x;save();if(field==='type')renderBuild()}
 function resultForGroup(h,date,defs){const c=currentConfig(h,date),r=rec(date,h);const nums=defs.filter(n=>levelDef(c,n)?.type==='number'),texts=defs.filter(n=>levelDef(c,n)?.type==='text');let html='';if(texts.length)html+=texts.map(n=>`<button class="secondary" onclick="recordText('${h.id}','${esc(n)}')">${r?.level==='Win'?'✓ ':''}${esc(levelDef(c,n).text)}</button>`).join(' ');if(nums.length)html+=`<input class="do-number-input" type="number" min="0" step="any" value="${r?.value!=null&&Number.isFinite(Number(r.value))?esc(r.value):''}" placeholder="Enter ${esc(nums[0]&&levelDef(c,nums[0]).unit||'result')}" onchange="recordNumber(this,'${h.id}')">`;return html}
 function renderActivities(){
  const date=$('date').value||today(); $('date').max=today();
@@ -341,47 +292,4 @@ normalizeState();$('date').max=today();$('date').value=today();renderAll();
 let deferredPrompt=null;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;$('installBtn').classList.add('show')});$('installBtn').onclick=async()=>{if(!deferredPrompt)return;deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;$('installBtn').classList.remove('show')};window.addEventListener('appinstalled',()=>$('installBtn').classList.remove('show'));if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 </script>
 
-
-
-<script id="wt-v16-build-js">
-(function(){
- const names=['Win','Big Win','Great Win','Mega Win'];
- const key='win_today_build_table_v16';
- const defaults=()=>names.map((name,i)=>({name,type:i===0?'text':'number',value:'',cue:''}));
- function get(){try{return JSON.parse(localStorage.getItem(key))||defaults()}catch(e){return defaults()}}
- function put(s){localStorage.setItem(key,JSON.stringify(s))}
- function esc(v){return String(v||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
- function render(){
-  const r=document.getElementById('wt-build-level-table'); if(!r)return;
-  const s=get();
-  s.forEach((x,i)=>{
-   const v=r.querySelector('[data-wt-table-level="'+i+'"]');
-   const t=r.querySelector('[data-wt-table-type="'+i+'"]');
-   const c=r.querySelector('[data-wt-table-cue="'+i+'"]');
-   if(v && document.activeElement!==v)v.value=x.value||'';
-   if(t)t.value=x.type||'number';
-   if(c && document.activeElement!==c)c.value=x.cue||'';
-  });
-  const p=r.querySelector('#wt-build-preview-rows');
-  p.innerHTML=s.filter(x=>x.value||x.cue).map((x,i)=>
-    '<div class="wt-build-preview-row"><b>'+names[i]+'</b> — '+esc(x.value)+(x.cue?' · '+esc(x.cue):'')+'</div>'
-  ).join('') || '<div class="wt-build-preview-row">Define your levels above.</div>';
- }
- document.addEventListener('DOMContentLoaded',()=>{
-  const r=document.getElementById('wt-build-level-table');if(!r)return;
-  render();
-  r.addEventListener('input',e=>{
-   const s=get();
-   if(e.target.dataset.wtTableLevel!==undefined)s[+e.target.dataset.wtTableLevel].value=e.target.value;
-   if(e.target.dataset.wtTableCue!==undefined)s[+e.target.dataset.wtTableCue].cue=e.target.value;
-   put(s);render();
-  });
-  r.addEventListener('change',e=>{
-   const s=get();
-   if(e.target.dataset.wtTableType!==undefined)s[+e.target.dataset.wtTableType].type=e.target.value;
-   put(s);render();
-  });
- });
-})();
-</script>
 </body></html>
